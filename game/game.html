@@ -2,9 +2,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-<title>Takeshita Demons - Memory Game</title>
+<title>Takeshita Demons - Yōkai Memory Game</title>
 <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/themes/base/jquery-ui.css">
 <style>
+body { background-color: #F7E7CE }
 #game { width: 820px; }
 h1 { text-align: center; }
 .tile { cursor: pointer; height: 260px; width: 200px; }
@@ -13,6 +14,7 @@ h1 { text-align: center; }
 .flipped .face { display: inline; }
 .flipped .back { display: none; }
 .flipped { cursor: default; }
+#backlink { background-image: url(fourhandscj.gif); height:150px; }
 </style>
 <script type="text/JavaScript">
 var _gaq = _gaq || [];
@@ -34,6 +36,7 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
 <tr><td><h1>YŌKAI MEMORY GAME</h1></td></tr>
 <tr><td><div id="game"></div></td></tr>
 </tbody></table>
+<a href="http://cristyburne.com"><div id="backlink"></div></a>
 <center>
 <script>
 $(function() { new game(6); })
