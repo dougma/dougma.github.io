@@ -3,16 +3,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 <title>Takeshita Demons - Memory Game</title>
-<link rel="stylesheet" href="../cjb.css">
 <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/themes/base/jquery-ui.css">
 <style>
+#game { width: 820px; }
+h1 { text-align: center; }
 .tile { cursor: pointer; height: 260px; width: 200px; }
 .face { display: none; }
 .back { display: inline; }
 .flipped .face { display: inline; }
 .flipped .back { display: none; }
 .flipped { cursor: default; }
-table { width: 820px; }
 </style>
 <script type="text/JavaScript">
 var _gaq = _gaq || [];
@@ -29,8 +29,12 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" language="JavaScript"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/jquery-ui.min.js" language="JavaScript"></script>
 <script src="game.js" language="JavaScript"></script>
-<h1 class="pos_right">YŌKAI MEMORY GAME</h1>
-<table><tbody><tr><td><div id="game"></div></td></tr></tbody></table>
+<center>
+<table><tbody>
+<tr><td><h1>YŌKAI MEMORY GAME</h1></td></tr>
+<tr><td><div id="game"></div></td></tr>
+</tbody></table>
+<center>
 <script>
 $(function() { new game(6); })
 </script>
