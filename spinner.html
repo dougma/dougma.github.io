@@ -69,7 +69,7 @@ parts = ["left foot", "right foot", "left hand", "right hand"];
 sets = {
 	traditional: f("red green blue yellow"),
 	words: f("is of to the her was went and saw my we on go he so in him had day for got me be as at"),
-	colours: f("white brown red grey purple light-blue pink yellow orange blue black green"),
+	colours: f("white brown red grey purple light-blue pink yellow orange dark-blue black green"),
 	letters: f("a b c d e f g h i j k l m n o p q r s t u v w x y z"),
 	numbers: f("1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20"),
 	animals: f("monkey elephant duck cat rabbit kangaroo goat fish dog tiger cow horse pig"),
@@ -78,14 +78,32 @@ sets = {
 setSelect = document.getElementById("set");
 for (i in sets) addOpt(setSelect, i, i);
 
+lastPart = -1;
+nextPart = () => {
+	var part;
+	do {
+		part = rnd(4)
+	} while (part === lastPart)
+	lastPart = part;
+	return parts[part];
+}
+
+lastWhere = {};
+nextWhere = (set, part) => {
+	var where;
+	do {
+		where = set[rnd(set.length)]	
+	} while (where === lastWhere[part])
+	lastWhere[part] = where;
+	return where
+}
+
 spin = () => {
-	var set = sets[setSelect.value],
-		what = parts[rnd(4)],
-		where = set[rnd(set.length)],
-		result = `${what} to: ${where}`;
+	var what = nextPart(),
+		where = nextWhere(sets[setSelect.value], what);
 	document.getElementById('what').innerText = what;
 	document.getElementById('where').innerText = where;
-	return result;
+	return `${what} to: ${where}`;
 }
 
 ss = window.speechSynthesis;
