@@ -9,49 +9,52 @@ body {
 	display:flex;
 	flex-direction: column;
 	height: 100vh;
-	padding: 5vmin;
+	margin: 0;
 }
 .container {
 }
-body > div {
-	flex:1;
-}
 button {
-	font-size:5vmin;
-	margin:5vmin;
+	font-size:6vmin;
 	flex:1;
 	border-radius:2vmin;
+	margin:3vmin;
 }
-div[id="what"], div[id="where"] { 
+.big { 
 	color: white;
 	background-color: #212; 	
 	font-size: 8vmin;
 	border-radius: 1vmin;
 	text-align: center;
-}
-div[id="what"] {
-	margin-bottom: 5vmin;
+	margin:3vmin;
 }
 label { color: white; font-size:3vmin; }
 select {
 	font-size:2.5vmin;
 	width:40%;
 }
-div[id="buttons"] {
-	display:flex;
+.inset {
+	position:absolute;
+	right:5.5vmin;
+	top:10.5vmin;
 }
 </style>
 <body>
-	<div>
-		<div id="what">&nbsp;</div>
-		<div id="where">&nbsp;</div>
+	<div style="flex: 0 1">
+		<div id="what" class="big">&nbsp;</div>
+		<div id="where" class="big">&nbsp;</div>
 	</div>
-	<div id="buttons">
+	<div id="buttons" style="flex: 1 0; display:flex">
 		<button onclick="spin()">spin</button>
 	</div>
-	<div id="settings">
-		<label>set</label>
-		<select id="set"></select><br>
+	<div style="flex: 1 1; display:flex">
+		<div id="settings" style="flex:1">
+			<label>set</label>
+			<select id="set"></select><br>
+		</div>
+		<div style="flex:1; position:relative" onclick="resetCounter()">
+			<div id="counter" class="big" style="margin:5vmin">0</div>
+			<label class="inset">spins</div>
+		</div>
 	</div>
 
 <script>
@@ -98,12 +101,23 @@ nextWhere = (set, part) => {
 	return where
 }
 
+lastSet="";
+counter=0;
 spin = () => {
-	var what = nextPart(),
-		where = nextWhere(sets[setSelect.value], what);
+	var set = sets[setSelect.value],
+	 	what = nextPart(),
+		where = nextWhere(set, what);
+	counter = (set === lastSet) ? counter+1 : 0;
+	lastSet = set;
+	document.getElementById('counter').innerText = counter;
 	document.getElementById('what').innerText = what;
 	document.getElementById('where').innerText = where;
-	return `${what} to: ${where}`;
+	return `${what} to: ${where}!`;
+}
+
+resetCounter = () => {
+	counter = 0;
+	document.getElementById('counter').innerText = counter;
 }
 
 ss = window.speechSynthesis;
