@@ -2,14 +2,61 @@
 <html>
 <head>
 <title>Spinner</title>
+<style>
+body { 
+	background-color: #424; 
+	font-family:sans-serif;
+	display:flex;
+	flex-direction: column;
+	height: 100vh;
+	padding: 5vw;
+}
+.container {
+}
+body > div {
+	flex:1;
+}
+button {
+	font-size:5vw;
+	margin:5vw;
+	flex:1;
+	border-radius:2vw;
+}
+div[id="what"], div[id="where"] { 
+	color: white;
+	background-color: #212; 	
+	font-size: 8vw;
+	border-radius: 1vw;
+	text-align: center;
+}
+div[id="what"] {
+	margin-bottom: 5vw;
+}
+label { color: white; font-size:3vw;}
+select {
+	font-size:2.5vw;
+	width:40%;
+}
+div[id="buttons"] {
+	display:flex;
+}
+</style>
 <body>
-<div id="result">spin!</div>
-<select id="set"></select>
-<button onclick="spin()">spin</button>
+	<div>
+		<div id="what">&nbsp;</div>
+		<div id="where">&nbsp;</div>
+	</div>
+	<div id="buttons">
+		<button onclick="spin()">spin</button>
+	</div>
+	<div id="settings">
+		<label>set</label>
+		<select id="set"></select><br>
+	</div>
+
 <script>
 f = s => s.split(" ");
 rnd = (max) => Math.floor(Math.random() * max);
-dba = x => document.body.appendChild(x);
 addOpt = (el, val, text) => {
 	var opt = document.createElement("option");
 	opt.value = val;
@@ -33,10 +80,11 @@ for (i in sets) addOpt(setSelect, i, i);
 
 spin = () => {
 	var set = sets[setSelect.value],
-		part = parts[rnd(4)],
+		what = parts[rnd(4)],
 		where = set[rnd(set.length)],
-		result = `${part} to: ${where}`;
-	document.getElementById('result').innerText = result;
+		result = `${what} to: ${where}`;
+	document.getElementById('what').innerText = what;
+	document.getElementById('where').innerText = where;
 	return result;
 }
 
@@ -56,15 +104,18 @@ if (ss) {
 			utterance.voice = voices[voiceSelect.value];
 			ss.speak(utterance);
 		}
+		document.getElementById("buttons").appendChild(btn);
 
-		dba(document.createTextNode("voice:"));
-		dba(voiceSelect);
-		dba(btn);
+		var settings = document.getElementById("settings");
+		var lbl = document.createElement("label");
+		lbl.innerText="voice";
+		settings.appendChild(lbl);
+		settings.appendChild(voiceSelect);
 
 		ss.onvoiceschanged = null;
 	}
 } else {
-	dba(document.createTextNode("speechSynthesis not available :("));
+	document.body.appendChild(document.createTextNode("speechSynthesis not available :("));
 }
 </script>
 </body>
