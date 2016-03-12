@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+<title>Spinner</title>
+<body>
+<div id="result">spin!</div>
+<select id="set"></select>
+<button onclick="spin()">spin</button>
+<script>
+f = s => s.split(" ");
+rnd = (max) => Math.floor(Math.random() * max);
+dba = x => document.body.appendChild(x);
+addOpt = (el, val, text) => {
+	var opt = document.createElement("option");
+	opt.value = val;
+	opt.innerText = text;
+	el.add(opt);
+}
+
+parts = ["left foot", "right foot", "left hand", "right hand"];
+
+sets = {
+	traditional: f("red green blue yellow"),
+	words: f("is of to the her was went and saw my we on go he so in him had day for got me be as at"),
+	colours: f("white brown red grey purple light-blue pink yellow orange blue black green"),
+	letters: f("a b c d e f g h i j k l m n o p q r s t u v w x y z"),
+	numbers: f("1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20"),
+	animals: f("monkey elephant duck cat rabbit kangaroo goat fish dog tiger cow horse pig"),
+};
+
+setSelect = document.getElementById("set");
+for (i in sets) addOpt(setSelect, i, i);
+
+spin = () => {
+	var set = sets[setSelect.value],
+		part = parts[rnd(4)],
+		where = set[rnd(set.length)],
+		result = `${part} to: ${where}`;
+	document.getElementById('result').innerText = result;
+	return result;
+}
+
+ss = window.speechSynthesis;
+if (ss) {
+	ss.onvoiceschanged = () => {
+		var voices = ss.getVoices(),
+			voiceSelect = document.createElement("select");
+
+		voices.forEach((voice, i) => addOpt(voiceSelect, i, voice.name));
+
+		var btn = document.createElement("button");
+		btn.innerText = "spin and speak";
+		btn.onclick = () => {
+			var msg = spin();
+			var utterance = new SpeechSynthesisUtterance(msg);
+			utterance.voice = voices[voiceSelect.value];
+			ss.speak(utterance);
+		}
+
+		dba(document.createTextNode("voice:"));
+		dba(voiceSelect);
+		dba(btn);
+
+		ss.onvoiceschanged = null;
+	}
+} else {
+	dba(document.createTextNode("speechSynthesis not available :("));
+}
+</script>
+</body>
