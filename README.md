@@ -1,4 +1,4 @@
 dougma.github.io
 ================
 
-a memory game! http://dougma.github.io/game.html
+miscellany https://dougma.github.io/index.html
